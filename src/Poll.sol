@@ -24,10 +24,17 @@ contract Poll {
     }
 
     function winner() public view returns (uint256 best) {
+        if (options.length == 0) {
+            return 0;
+        }
+
         best = 0;
+        uint256 highestVotes = votes[0];
 
         for (uint256 i = 1; i < options.length; i++) {
-            if (votes[i] > votes[best]) {
+            uint256 currentVotes = votes[i];
+            if (currentVotes > highestVotes) {
+                highestVotes = currentVotes;
                 best = i;
             }
         }
